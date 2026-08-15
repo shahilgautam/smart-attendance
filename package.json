@@ -1,0 +1,49 @@
+{
+  "name": "smart-attendance",
+  "version": "1.0.0",
+  "description": "Smart Attendance System",
+  "main": "server.js",
+  "bin": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "build-exe": "pkg . --targets node18-win-x64 --output dist/SmartAttendance.exe"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@mediapipe/tasks-vision": "^0.10.35",
+    "@tensorflow/tfjs": "^4.22.0",
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-mysql-session": "^3.0.3",
+    "express-session": "^1.19.0",
+    "face-api.js": "^0.22.2",
+    "multer": "^2.2.0",
+    "mysql2": "^3.22.6"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14",
+    "pkg": "^5.8.1"
+  },
+  "pkg": {
+    "assets": [
+      "public/**/*",
+      "views/**/*",
+      "uploads/**/*",
+      "face-models/**/*",
+      ".env"
+    ],
+    "scripts": [
+      "controllers/**/*.js",
+      "routes/**/*.js",
+      "models/**/*.js",
+      "config/**/*.js"
+    ]
+  }
+}
