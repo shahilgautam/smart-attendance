@@ -1,0 +1,307 @@
+/* ==========================================
+   Smart Attendance Management System
+   settings.css
+========================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f4f6f9;
+    color:#333;
+}
+
+/* ===========================
+   Layout
+=========================== */
+
+.container{
+    display:flex;
+    min-height:100vh;
+}
+
+/* ===========================
+   Sidebar
+=========================== */
+
+.sidebar{
+    width:250px;
+    background:#1e293b;
+    color:#fff;
+    padding:25px 0;
+    position:fixed;
+    height:100%;
+    overflow-y:auto;
+}
+
+.sidebar h2{
+    text-align:center;
+    margin-bottom:35px;
+    font-size:24px;
+    font-weight:bold;
+}
+
+.sidebar ul{
+    list-style:none;
+}
+
+.sidebar li{
+    padding:15px 25px;
+    cursor:pointer;
+    transition:.3s;
+    font-size:16px;
+}
+
+.sidebar li:hover{
+    background:#334155;
+}
+
+.sidebar li.active{
+    background:#2563eb;
+}
+
+/* ===========================
+   Main Content
+=========================== */
+
+.main-content{
+    margin-left:250px;
+    width:calc(100% - 250px);
+    padding:30px;
+}
+
+/* ===========================
+   Topbar
+=========================== */
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.topbar h1{
+    font-size:30px;
+    color:#1e293b;
+}
+
+.topbar p{
+    color:#666;
+    margin-top:5px;
+}
+
+.admin-box{
+    background:#fff;
+    padding:12px 20px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+    font-weight:bold;
+}
+
+/* ===========================
+   Cards
+=========================== */
+
+.card{
+    background:#fff;
+    border-radius:12px;
+    padding:25px;
+    margin-bottom:25px;
+    box-shadow:0 4px 10px rgba(0,0,0,.08);
+}
+
+.card h2{
+    margin-bottom:20px;
+    color:#1e293b;
+}
+
+/* ===========================
+   Grid
+=========================== */
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+}
+
+/* ===========================
+   Form
+=========================== */
+
+label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:bold;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:15px;
+}
+
+input:focus{
+    outline:none;
+    border-color:#2563eb;
+}
+
+/* ===========================
+   Buttons
+=========================== */
+
+button{
+    padding:12px 22px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    background:#2563eb;
+    color:#fff;
+    font-size:15px;
+    margin-top:20px;
+    margin-right:10px;
+    transition:.3s;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+/* ===========================
+   Camera
+=========================== */
+
+#cameraPreview{
+    width:100%;
+    max-width:600px;
+    border-radius:10px;
+    border:2px solid #ddd;
+    background:#000;
+}
+
+#cameraStatus{
+    margin-top:15px;
+    font-weight:bold;
+    color:#2563eb;
+}
+
+/* ===========================
+   About Table
+=========================== */
+
+.about-table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.about-table td{
+    border:1px solid #ddd;
+    padding:14px;
+}
+
+.about-table tr:nth-child(even){
+    background:#f8f9fa;
+}
+
+.about-table td:first-child{
+    font-weight:bold;
+    width:220px;
+    background:#eef2ff;
+}
+
+/* ===========================
+   Scrollbar
+=========================== */
+
+::-webkit-scrollbar{
+    width:8px;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#888;
+    border-radius:10px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background:#555;
+}
+
+/* ===========================
+   Responsive
+=========================== */
+
+@media(max-width:992px){
+
+    .sidebar{
+        width:220px;
+    }
+
+    .main-content{
+        margin-left:220px;
+        width:calc(100% - 220px);
+    }
+
+}
+
+@media(max-width:768px){
+
+    .container{
+        flex-direction:column;
+    }
+
+    .sidebar{
+        position:relative;
+        width:100%;
+        height:auto;
+    }
+
+    .main-content{
+        margin-left:0;
+        width:100%;
+        padding:20px;
+    }
+
+    .topbar{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:15px;
+    }
+
+    button{
+        width:100%;
+        margin-right:0;
+    }
+
+}
+
+@media(max-width:480px){
+
+    .card{
+        padding:18px;
+    }
+
+    .topbar h1{
+        font-size:24px;
+    }
+
+    .sidebar h2{
+        font-size:20px;
+    }
+
+    .sidebar li{
+        font-size:15px;
+    }
+
+    .about-table td{
+        padding:10px;
+        font-size:14px;
+    }
+
+}

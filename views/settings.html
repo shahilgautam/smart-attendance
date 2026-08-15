@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Smart Attendance</title>
+
+    <link rel="stylesheet" href="/css/settings.css">
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <h2>SmartAttend</h2>
+
+        <ul>
+
+            <li onclick="window.location='/dashboard'">
+                🏠 Dashboard
+            </li>
+
+            <li onclick="window.location='/employees'">
+                👥 Employee Management
+            </li>
+
+            <li onclick="window.location='/face-register'">
+                📷 Face Registration
+            </li>
+
+            <li onclick="window.location='/attendance'">
+                🎥 Attendance
+            </li>
+
+            <li onclick="window.location='/attendance-report'">
+                📊 Attendance Report
+            </li>
+
+            <li class="active">
+                ⚙ Settings
+            </li>
+
+            <li id="logoutBtn">
+                🚪 Logout
+            </li>
+
+        </ul>
+
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Header -->
+        <div class="topbar">
+
+            <div>
+
+                <h1>Settings</h1>
+
+                <p>Manage System Configuration</p>
+
+            </div>
+
+            <div class="admin-box">
+
+                <span id="adminName">
+                    Welcome, Admin
+                </span>
+
+            </div>
+
+        </div>
+
+        <!-- Admin Profile -->
+        <section class="card">
+
+            <h2>👤 Admin Profile</h2>
+
+            <div class="grid">
+
+                <div>
+                    <label>Admin Name</label>
+                    <input
+                        type="text"
+                        id="adminFullName"
+                        value="Administrator"
+                        readonly>
+                </div>
+
+                <div>
+                    <label>Username</label>
+                    <input
+                        type="text"
+                        id="adminUsername"
+                        value="admin"
+                        readonly>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Change Password -->
+        <section class="card">
+
+            <h2>🔒 Change Password</h2>
+
+            <div class="grid">
+
+                <div>
+                    <label>Current Password</label>
+
+                    <input
+                        type="password"
+                        id="currentPassword">
+                </div>
+
+                <div>
+                    <label>New Password</label>
+
+                    <input
+                        type="password"
+                        id="newPassword">
+                </div>
+
+                <div>
+                    <label>Confirm Password</label>
+
+                    <input
+                        type="password"
+                        id="confirmPassword">
+                </div>
+
+            </div>
+
+            <button id="changePasswordBtn">
+                Update Password
+            </button>
+
+        </section>
+
+        <!-- Attendance Settings -->
+        <section class="card">
+
+            <h2>⏰ Attendance Settings</h2>
+
+            <div class="grid">
+
+                <div>
+
+                    <label>Office Start Time</label>
+
+                    <input
+                        type="time"
+                        id="officeStart"
+                        value="09:00">
+
+                </div>
+
+                <div>
+
+                    <label>Late After</label>
+
+                    <input
+                        type="time"
+                        id="lateAfter"
+                        value="09:15">
+
+                </div>
+
+                <div>
+
+                    <label>Office End Time</label>
+
+                    <input
+                        type="time"
+                        id="officeEnd"
+                        value="18:00">
+
+                </div>
+
+            </div>
+
+            <button id="saveAttendanceBtn">
+                Save Attendance Settings
+            </button>
+
+        </section>
+
+        <!-- Camera Test -->
+        <section class="card">
+
+            <h2>📷 Camera Test</h2>
+
+            <video
+                id="cameraPreview"
+                autoplay
+                muted
+                playsinline>
+            </video>
+
+            <br><br>
+
+            <button id="startCameraBtn">
+
+                Start Camera
+
+            </button>
+
+            <p id="cameraStatus">
+
+                Camera Not Started
+
+            </p>
+
+        </section>
+
+        
+        </section>
+
+        <!-- About -->
+        <section class="card">
+
+            <h2>ℹ About System</h2>
+
+            <table class="about-table">
+
+                <tr>
+                    <td>System Name</td>
+                    <td>Smart Attendance Management System</td>
+                </tr>
+
+                <tr>
+                    <td>Version</td>
+                    <td>Version 1.0</td>
+                </tr>
+
+                <tr>
+                    <td>Developer</td>
+                    <td>Shahil (H), Sachin, Himanshi, Devesh Kumar</td>
+                </tr>
+
+                <tr>
+                    <td>Technology</td>
+                    <td>Node.js, Express.js, MySQL, HTML, CSS, JavaScript</td>
+                </tr>
+
+                <tr>
+                    <td>Face Detection</td>
+                    <td>MediaPipe Face Detection</td>
+                </tr>
+
+                <tr>
+                    <td>Authentication</td>
+                    <td>JWT Authentication</td>
+                </tr>
+
+                <tr>
+                    <td>Database</td>
+                    <td>MySQL</td>
+                </tr>
+
+                <tr>
+                    <td>Developed For</td>
+                    <td>Final Year B.Tech Project</td>
+                </tr>
+
+                <tr>
+                    <td>Academic Session</td>
+                    <td>2026–2027</td>
+                </tr>
+
+            </table>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="/js/settings.js"></script>
+
+</body>
+</html>

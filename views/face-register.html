@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Face Registration</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f2f5f9;
+    padding:20px;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+    background:#fff;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,.15);
+}
+
+h2{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.form-group{
+    margin-bottom:20px;
+}
+
+select{
+    width:100%;
+    padding:10px;
+    font-size:16px;
+}
+
+.wrapper{
+    display:flex;
+    gap:20px;
+    justify-content:center;
+    flex-wrap:wrap;
+}
+
+.card{
+    text-align:center;
+}
+
+video,
+img{
+    width:500px;
+    height:375px;
+    border:2px solid #444;
+    border-radius:10px;
+    background:#000;
+}
+
+.camera-box{
+    position:relative;
+}
+
+#overlay{
+    position:absolute;
+    left:0;
+    top:0;
+    pointer-events:none;
+}
+
+.buttons{
+    margin-top:20px;
+    text-align:center;
+}
+
+button{
+    padding:12px 25px;
+    margin:5px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+#status{
+    margin-top:20px;
+    text-align:center;
+    font-weight:bold;
+    color:green;
+}
+</style>
+</head>
+
+<body>
+<div class="header-buttons">
+
+        <button onclick="window.location.href='/dashboard'">
+            🏠 Dashboard
+        </button></div>
+<div class="container">
+
+<h2>Face Registration</h2>
+
+<div class="form-group">
+<select id="employee">
+<option>Loading Employees...</option>
+</select>
+</div>
+
+<div class="wrapper">
+
+<div class="card">
+
+<h3>Live Camera</h3>
+
+<div class="camera-box">
+
+<video
+id="video"
+autoplay
+playsinline
+muted>
+</video>
+
+<canvas id="overlay"></canvas>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>Captured Photo</h3>
+
+<img
+id="preview"
+src=""
+alt="Captured Image">
+
+</div>
+
+</div>
+
+<div class="buttons">
+
+<button id="captureBtn">
+📸 Capture Photo
+</button>
+
+<button id="saveBtn" disabled>
+💾 Save Face
+</button>
+
+</div>
+
+<p id="status">
+Waiting...
+</p>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/face_detection.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+
+<script type="module" src="/js/face-register.js"></script>
+
+</body>
+</html>

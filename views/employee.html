@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Employees</title>
+
+    <link rel="stylesheet"
+          href="/css/employee.css">
+
+</head>
+
+<body>
+
+<div class="header-buttons">
+
+    <button
+        onclick="window.location.href='/dashboard'">
+
+        🏠 Dashboard
+
+    </button>
+
+</div>
+
+
+<div class="container">
+
+
+    <div class="topbar">
+
+        <h2>
+            Employee Management
+        </h2>
+
+
+        <div>
+
+            <input
+                type="text"
+                id="searchEmployee"
+                placeholder="Search Employee..."
+            >
+
+
+            <button
+                id="addEmployeeBtn">
+
+                + Add Employee
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div
+        id="employeeForm"
+        style="display:none; margin-bottom:50px;"
+    >
+
+
+        <input
+            type="hidden"
+            id="employee_id"
+        >
+
+
+        <input
+            type="text"
+            id="employee_code"
+            placeholder="Employee Code"
+        >
+
+
+        <input
+            type="text"
+            id="name"
+            placeholder="Employee Name"
+        >
+
+
+        <input
+            type="text"
+            id="department"
+            placeholder="Department"
+        >
+
+
+        <input
+            type="text"
+            id="designation"
+            placeholder="Designation"
+        >
+
+
+        <input
+            type="email"
+            id="email"
+            placeholder="Email"
+        >
+
+
+        <input
+            type="text"
+            id="phone"
+            placeholder="Phone"
+        >
+
+
+        
+
+
+        <button
+            id="saveEmployee">
+
+            Save Employee
+
+        </button>
+
+
+    </div>
+
+
+    <table>
+
+
+        <thead>
+
+            <tr>
+
+                <th>
+                    ID
+                </th>
+
+                <th>
+                    Code
+                </th>
+
+                <th>
+                    Name
+                </th>
+
+                <th>
+                    Department
+                </th>
+
+                <th>
+                    Designation
+                </th>
+
+                <th>
+                    Status
+                </th>
+
+                <th>
+                    Action
+                </th>
+
+            </tr>
+
+        </thead>
+
+
+        <tbody
+            id="employeeTable"
+        >
+
+        </tbody>
+
+
+    </table>
+
+
+</div>
+
+
+<script
+    src="/js/employee.js"
+></script>
+
+
+</body>
+
+</html>

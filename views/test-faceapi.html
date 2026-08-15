@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face API Test</title>
+
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            padding:40px;
+        }
+
+        h2{
+            color:#333;
+        }
+
+        .success{
+            color:green;
+            font-weight:bold;
+        }
+
+        .error{
+            color:red;
+            font-weight:bold;
+        }
+
+        pre{
+            background:#f5f5f5;
+            padding:10px;
+            border-radius:5px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Loading Face API Models...</h2>
+
+<div id="status"></div>
+
+<script src="/face-api/face-api.js"></script>
+
+<script>
+
+const status = document.getElementById("status");
+
+function log(message, success=true){
+
+    const p=document.createElement("p");
+    p.className=success?"success":"error";
+    p.innerText=message;
+    status.appendChild(p);
+
+    console.log(message);
+
+}
+
+async function loadModels(){
+
+    try{
+
+        log("Loading Tiny Face Detector...");
+
+        await faceapi.nets.tinyFaceDetector.loadFromUri("/models");
+
+        log("✅ Tiny Face Detector Loaded");
+
+    }catch(err){
+
+        log("❌ Tiny Face Detector Failed",false);
+        console.error(err);
+
+    }
+
+
+    try{
+
+        log("Loading Face Landmark...");
+
+        await faceapi.nets.faceLandmark68Net.loadFromUri("/models");
+
+        log("✅ Face Landmark Loaded");
+
+    }catch(err){
+
+        log("❌ Face Landmark Failed",false);
+        console.error(err);
+
+    }
+
+
+    try{
+
+        log("Loading Face Recognition...");
+
+        await faceapi.nets.faceRecognitionNet.loadFromUri("/models");
+
+        log("✅ Face Recognition Loaded");
+
+    }catch(err){
+
+        log("❌ Face Recognition Failed",false);
+        console.error(err);
+
+    }
+
+    log("---------------------------");
+
+    log("Finished Loading Models");
+
+}
+
+loadModels();
+
+</script>
+
+</body>
+</html>

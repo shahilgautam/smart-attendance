@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Attendance Dashboard</title>
+
+    <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+
+<div class="sidebar">
+
+    <h2>SmartAttend</h2>
+
+    <ul>
+        <li class="active" onclick="window.location='/dashboard'">🏠 Dashboard</li>
+
+        <li onclick="window.location='/employees'">👨 Employee Management</li>
+
+        <li onclick="window.location='/face-register'">📷 Face Registration</li>
+
+        <li onclick="window.location='/attendance'">📸 Attendance</li>
+
+        <li onclick="window.location='/attendance-report'">📊 Attendance Report</li>
+
+        <li onclick="window.location='/settings'">⚙ Settings</li>
+
+        <li id="logoutMenu">🚪 Logout</li>
+    </ul>
+
+</div>
+
+<div class="main">
+
+    <!-- Topbar -->
+
+    <div class="topbar">
+
+        <div>
+            <h2>Dashboard</h2>
+            <p>Smart Attendance Management System</p>
+        </div>
+
+        <div class="admin-info">
+
+            <span id="adminName">
+                Welcome, Admin
+            </span>
+
+            <button id="logoutBtn">
+                Logout
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- Dashboard Cards -->
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>Total Employees</h3>
+            <h1 id="totalEmployees">0</h1>
+        </div>
+
+        <div class="card">
+            <h3>Present Today</h3>
+            <h1 id="presentToday">0</h1>
+        </div>
+
+        <div class="card">
+            <h3>Absent Today</h3>
+            <h1 id="absentToday">0</h1>
+        </div>
+
+        <div class="card">
+            <h3>Late Today</h3>
+            <h1 id="lateToday">0</h1>
+        </div>
+
+    </div>
+
+    <!-- Recent Attendance -->
+
+    <div class="table-section">
+
+        <h2>Recent Attendance</h2>
+
+        <table class="attendance-table">
+
+            <thead>
+
+                <tr>
+                    <th>Employee</th>
+                    <th>Department</th>
+                    <th>Check In</th>
+                    <th>Check Out</th>
+                    <th>Status</th>
+                </tr>
+
+            </thead>
+
+            <tbody id="recentAttendance">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<script src="/js/dashboard.js"></script>
+
+</body>
+</html>

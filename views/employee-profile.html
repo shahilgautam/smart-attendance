@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Profile</title>
+
+    <link rel="stylesheet" href="/css/employee-profile.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="top-bar">
+
+        <a href="/employees" class="back-btn">← Back</a>
+
+        <h1>Employee Profile</h1>
+
+    </div>
+
+    <div class="profile-card">
+
+        <div class="profile-left">
+
+            <img id="empPhoto" src="" class="profile-photo">
+
+            <div class="status-badge" id="empStatus">
+                Active
+            </div>
+
+        </div>
+
+        <div class="profile-right">
+
+            <h2 id="empName"></h2>
+
+            <h3 id="empCode"></h3>
+
+            <div class="info-grid">
+
+                <div class="info-box">
+
+                    <span class="title">Department</span>
+
+                    <span class="value" id="empDepartment"></span>
+
+                </div>
+
+                <div class="info-box">
+
+                    <span class="title">Designation</span>
+
+                    <span class="value" id="empDesignation"></span>
+
+                </div>
+
+                <div class="info-box">
+
+                    <span class="title">Email</span>
+
+                    <span class="value" id="empEmail"></span>
+
+                </div>
+
+                <div class="info-box">
+
+                    <span class="title">Phone</span>
+
+                    <span class="value" id="empPhone"></span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="summary">
+
+        <h2>Attendance Summary</h2>
+
+        <div class="summary-cards">
+
+            <div class="summary-card present">
+                <h3>Present</h3>
+                <h1 id="presentCount">0</h1>
+            </div>
+
+            <div class="summary-card late">
+                <h3>Late</h3>
+                <h1 id="lateCount">0</h1>
+            </div>
+
+            <div class="summary-card absent">
+                <h3>Absent</h3>
+                <h1 id="absentCount">0</h1>
+            </div>
+
+            <div class="summary-card total">
+                <h3>Total Days</h3>
+                <h1 id="totalCount">0</h1>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="attendance-history">
+
+        <h2>Recent Attendance</h2>
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Date</th>
+
+                    <th>Check In</th>
+
+                    <th>Check Out</th>
+
+                    <th>Status</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="attendanceTable">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<script src="/js/employee-profile.js"></script>
+
+</body>
+</html>
