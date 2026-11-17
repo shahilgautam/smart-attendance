@@ -43,6 +43,10 @@ async function loadLabeledImages() {
         await fetch("/api/recognition/employees");
 
     const data = await response.json();
+    if (response.status === 401) {
+        window.location.href = '/login';
+        throw new Error('Please log in to use attendance.');
+    }
 
     if (!data.success) {
 
@@ -88,7 +92,6 @@ employees.forEach(emp => {
 
             const img =
                 await faceapi.fetchImage(emp.photo);
-                console.log("Image loaded:", img.width, img.height, emp.photo);
 
             const detection = await faceapi
 
@@ -153,36 +156,38 @@ employees.forEach(emp => {
 // ===============================
 
 async function startCamera() {
+
     try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-            video: {
-                width: { ideal: 640 },
-                height: { ideal: 480 },
-                facingMode: "user"
-            },
-            audio: false
-        });
+
+        const stream =
+            await navigator.mediaDevices.getUserMedia({
+
+                video: {
+                    width: { ideal: 640 },
+                    height: { ideal: 480 },
+                    facingMode: "user"
+                },
+
+                audio: false
+
+            });
 
         video.srcObject = stream;
 
-        await new Promise((resolve) => {
-            video.onloadedmetadata = () => {
-                video.play();
-                resolve();
-            };
-        });
-
-        console.log(
-            "Video Size:",
-            video.videoWidth,
-            video.videoHeight
-        );
+        await video.play();
 
         console.log("✅ Camera started successfully");
 
-    } catch (error) {
-        console.error(error);
     }
+
+    catch (error) {
+        console.error("Camera error:", error);
+        const status = document.getElementById("attendanceStatus");
+        status.className = "status error";
+        status.textContent = error.message;
+        throw error;
+    }
+
 }
 
 // ===============================
@@ -191,14 +196,7 @@ async function startCamera() {
 
 async function markAttendance(employeeId) {
 
-    if (
-        markedEmployees.has(employeeId) ||
-        processingEmployees.has(employeeId)
-    ) {
-
-        return;
-
-    }
+    if (markedEmployees.has(employeeId) || processingEmployees.has(employeeId)) return;
 
 
     // Lock immediately
@@ -238,6 +236,9 @@ async function markAttendance(employeeId) {
         const data =
             await response.json();
 
+        // One attendance request per employee per page load. This prevents a
+        // continuously visible face from repeatedly toggling check-in/out.
+        markedEmployees.add(employeeId);
 
         const status =
             document.getElementById(
@@ -257,9 +258,7 @@ async function markAttendance(employeeId) {
 
         if (data.success) {
 
-            markedEmployees.add(
-                employeeId
-            );
+            markedEmployees.add(employeeId);
 
 
             if (
@@ -316,10 +315,10 @@ async function markAttendance(employeeId) {
 
     catch (error) {
 
-        console.error(
-            "Attendance error:",
-            error
-        );
+        console.error("Attendance error:", error);
+        const status = document.getElementById("attendanceStatus");
+        status.className = "status error";
+        status.textContent = error.message || "Attendance request failed.";
 
     }
 
@@ -440,6 +439,7 @@ function startRecognition() {
         try {
 
 
+            if (!faceMatcher) return;
             const detections =
                 await faceapi
 
@@ -667,76 +667,37 @@ async function init() {
     try {
 
 
-        // 1. Load models
+        const status = document.getElementById("attendanceStatus");
+        status.textContent = "Loading local face-recognition models…";
 
+        // Start camera first: the preview should still work if a local AI model
+        // is missing or no employee has registered a face yet.
+        await startCamera();
+        status.textContent = "Camera ready. Loading local recognition models…";
+
+        // Models are served by Express from public/models; no network is needed.
         await loadModels();
+        status.textContent = "Camera ready. Loading registered employee faces…";
+        labeledFaceDescriptors = await loadLabeledImages();
 
-
-        // 2. Load employee face descriptors
-
-        labeledFaceDescriptors =
-            await loadLabeledImages();
-
-
-        if (
-
-            labeledFaceDescriptors
-                .length === 0
-
-        ) {
-
-            console.warn(
-
-                "⚠️ No employee face descriptors loaded"
-
-            );
-
+        if (labeledFaceDescriptors.length === 0) {
+            status.className = "status waiting";
+            status.textContent = "Camera is working. No usable registered faces found. Register an employee face first.";
             return;
-
         }
 
-
-        // 3. Create FaceMatcher
-
-        faceMatcher =
-            new faceapi.FaceMatcher(
-
-                labeledFaceDescriptors,
-
-                0.5
-
-            );
-
-
-        console.log(
-
-            "✅ Face matcher created"
-
-        );
-
-
-        // 4. Start camera
-
-        await startCamera();
-
-
-        // 5. Start recognition only now
-
+        faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.5);
+        status.textContent = "Recognition active. Look at the camera.";
         startRecognition();
 
 
     }
 
     catch (error) {
-
-        console.error(
-
-            "❌ Initialization error:",
-
-            error
-
-        );
-
+        console.error('Recognition initialization error:', error);
+        const status = document.getElementById('attendanceStatus');
+        status.className = 'status error';
+        status.textContent = error.message || 'Could not initialize face recognition. Camera preview may still be available.';
     }
 
 }
