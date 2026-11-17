@@ -14,7 +14,8 @@ exports.getEmployees = async (req, res) => {
         designation,
         photo
     FROM employees
-    WHERE photo IS NOT NULL
+    WHERE status = 'Active'
+      AND photo IS NOT NULL
       AND photo <> ''
 `);
 
