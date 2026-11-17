@@ -9,6 +9,8 @@ const video = document.getElementById("video");
 const preview = document.getElementById("preview");
 
 let capturedImage = null;
+let faceIsDetected = false;
+let stopDetection = null;
 
 // =========================
 // Page Load
@@ -20,11 +22,14 @@ window.addEventListener("DOMContentLoaded", async () => {
 
         await startCamera("video");
 
-        await initDetector(
+        stopDetection = await initDetector(
             video,
             document.getElementById("overlay"),
             status,
-            saveBtn
+            (detected) => {
+                faceIsDetected = detected;
+                if (!capturedImage) captureBtn.disabled = !detected;
+            }
         );
 
         status.textContent = "✅ Camera Started";
@@ -32,9 +37,10 @@ window.addEventListener("DOMContentLoaded", async () => {
         await loadEmployees();
 
     } catch (err) {
-
         console.error(err);
-        status.textContent = "❌ Camera Failed";
+        captureBtn.disabled = true;
+        saveBtn.disabled = true;
+        status.textContent = `❌ ${err.message}`;
 
     }
 
@@ -59,7 +65,7 @@ async function loadEmployees() {
 }
         employee.innerHTML = `<option value="">Select Employee</option>`;
 
-        result.data.forEach(emp => {
+        (result.data || []).forEach(emp => {
 
             employee.innerHTML += `
                 <option value="${emp.id}">
@@ -71,6 +77,7 @@ async function loadEmployees() {
 
     } catch (err) {
 
+        saveBtn.disabled = false;
         console.error(err);
         status.textContent = "❌ Failed to Load Employees";
 
@@ -84,11 +91,13 @@ async function loadEmployees() {
 
 captureBtn.addEventListener("click", () => {
 
-    if (video.readyState !== 4) {
-
+    if (video.readyState < 2) {
         alert("Camera not ready.");
         return;
-
+    }
+    if (!faceIsDetected) {
+        alert("A single face must be detected before capture.");
+        return;
     }
 
     const canvas = document.createElement("canvas");
@@ -112,8 +121,9 @@ captureBtn.addEventListener("click", () => {
     preview.src = capturedImage;
 
     saveBtn.disabled = false;
+    captureBtn.disabled = false;
 
-    status.textContent = "📸 Photo Captured";
+    status.textContent = "📸 Photo Captured. Click Save Face.";
 
 });
 
@@ -137,6 +147,7 @@ saveBtn.addEventListener("click", async () => {
 
     }
 
+    saveBtn.disabled = true;
     try {
 
         const response = await fetch("/api/faces/upload", {
@@ -169,17 +180,18 @@ saveBtn.addEventListener("click", async () => {
             capturedImage = null;
 
             saveBtn.disabled = true;
+            captureBtn.disabled = !faceIsDetected;
 
             status.textContent = "✅ Registration Complete";
 
         } else {
-
+            saveBtn.disabled = false;
             alert(result.message);
-
         }
 
     } catch (err) {
 
+        saveBtn.disabled = false;
         console.error(err);
 
         alert("Error: " + err.message);
