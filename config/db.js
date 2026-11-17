@@ -1,59 +1,23 @@
-const mysql = require("mysql2/promise");
-require("dotenv").config();
+const mysql = require('mysql2/promise');
+require('dotenv').config();
+let pool;
 
-let pool = null;
-
-// Initialize MySQL Database and Connection Pool
 async function initializePool() {
-    // If pool already exists, don't recreate it
-    if (pool) {
-        return pool;
-    }
-
-    // Connect to MySQL Server
-    const connection = await mysql.createConnection({
-        host: process.env.DB_HOST,
-        user: process.env.DB_USER,
-        password: process.env.DB_PASSWORD
-    });
-
-    console.log("✅ Connected to MySQL Server");
-
-    // Create Database if it doesn't exist
-    await connection.query(
-        `CREATE DATABASE IF NOT EXISTS \`${process.env.DB_NAME}\``
-    );
-
-    console.log(`✅ Database '${process.env.DB_NAME}' Ready`);
-
+    if (pool) return pool;
+    const host = process.env.DB_HOST || '127.0.0.1';
+    const user = process.env.DB_USER || 'root';
+    const password = process.env.DB_PASSWORD || '';
+    const database = process.env.DB_NAME || 'smart_attendance';
+    const connection = await mysql.createConnection({ host, user, password });
+    await connection.query(`CREATE DATABASE IF NOT EXISTS \`${database.replace(/`/g, '')}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`);
     await connection.end();
-
-    // Create Connection Pool
-    pool = mysql.createPool({
-        host: process.env.DB_HOST,
-        user: process.env.DB_USER,
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_NAME,
-        waitForConnections: true,
-        connectionLimit: 10,
-        queueLimit: 0
-    });
-
-    console.log("✅ Connection Pool Ready");
-
+    pool = mysql.createPool({ host, user, password, database, waitForConnections: true, connectionLimit: 10, queueLimit: 0, dateStrings: true });
+    await pool.query('SELECT 1');
+    console.log(`Connected to local MySQL database: ${database}`);
     return pool;
 }
-
-// Get Connection Pool
 function getPool() {
-    if (!pool) {
-        throw new Error("Database pool has not been initialized.");
-    }
-
+    if (!pool) throw new Error('Database pool has not been initialized.');
     return pool;
 }
-
-module.exports = {
-    initializePool,
-    getPool
-};
+module.exports = { initializePool, getPool };
