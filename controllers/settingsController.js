@@ -57,41 +57,72 @@ async function updateSettings(req, res) {
     try {
 
         const {
+
             officeStart,
+
             lateAfter,
+
             officeEnd
+
         } = req.body;
 
+
         if (
+
             !officeStart ||
-            lateAfter === undefined ||
-            lateAfter === null ||
+
+            !lateAfter ||
+
             !officeEnd
+
         ) {
+
             return res.status(400).json({
+
                 success: false,
-                message: "All attendance settings are required."
+
+                message:
+                    "All attendance settings are required."
+
             });
+
         }
 
+
         await updateAttendanceSettings(
+
             officeStart,
-            Number(lateAfter),
+
+            lateAfter,
+
             officeEnd
+
         );
 
+
         res.json({
+
             success: true,
-            message: "Attendance settings saved successfully."
+
+            message:
+                "Attendance settings saved successfully."
+
         });
 
-    } catch (error) {
+    }
+
+    catch (error) {
 
         console.error(error);
 
+
         res.status(500).json({
+
             success: false,
-            message: "Failed to save attendance settings."
+
+            message:
+                "Failed to save attendance settings."
+
         });
 
     }
