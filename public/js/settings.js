@@ -117,6 +117,10 @@ startCameraBtn.addEventListener("click", async () => {
 // Change Password
 // -------------------------
 
+// -------------------------
+// Change Password
+// -------------------------
+
 changePasswordBtn.addEventListener("click", async () => {
 
     const currentPassword =
@@ -251,6 +255,9 @@ changePasswordBtn.addEventListener("click", async () => {
     }
 
 });
+// -------------------------
+// Attendance Settings
+// -------------------------
 
 // ============================
 // LOAD ATTENDANCE SETTINGS
@@ -260,37 +267,73 @@ async function loadAttendanceSettings() {
 
     try {
 
-        const response = await fetch("/api/settings", {
-            credentials: "same-origin"
-        });
+        const response =
+            await fetch(
 
-        const result = await response.json();
+                "/api/settings",
 
-        if (response.status === 401) {
-            window.location.href = "/login";
+                {
+
+                    credentials:
+                        "same-origin"
+
+                }
+
+            );
+
+
+        const result =
+            await response.json();
+
+
+        if (
+
+            response.status === 401
+
+        ) {
+
+            window.location.href =
+                "/login";
+
             return;
-        }
-
-        if (result.success) {
-
-            document.getElementById("officeStart").value =
-                result.data.office_start_time;
-
-            document.getElementById("officeEnd").value =
-                result.data.office_end_time;
-
-            // Convert minutes to HH:MM
-            const totalMinutes = Number(result.data.late_after_minutes);
-
-            const hours = Math.floor(totalMinutes / 60);
-            const minutes = totalMinutes % 60;
-
-            document.getElementById("lateAfter").value =
-                `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
 
         }
 
-    } catch (error) {
+
+        if (
+
+            result.success
+
+        ) {
+
+            document.getElementById(
+
+                "officeStart"
+
+            ).value =
+                result.data.office_start;
+
+
+            document.getElementById(
+
+                "lateAfter"
+
+            ).value =
+                result.data.late_after;
+
+
+            document.getElementById(
+
+                "officeEnd"
+
+            ).value =
+                result.data.office_end;
+
+        }
+
+    }
+
+    catch (error) {
 
         console.error(error);
 
@@ -298,86 +341,143 @@ async function loadAttendanceSettings() {
 
 }
 
+
 // ============================
 // SAVE ATTENDANCE SETTINGS
 // ============================
 
-saveAttendanceBtn.addEventListener("click", async () => {
+saveAttendanceBtn.addEventListener(
 
-    const officeStart =
-        document.getElementById("officeStart").value;
+    "click",
 
-    const officeEnd =
-        document.getElementById("officeEnd").value;
+    async () => {
 
-    const lateAfterTime =
-        document.getElementById("lateAfter").value;
 
-    // Convert HH:MM to minutes after office start
-    const start =
-        officeStart.split(":").map(Number);
+        const officeStart =
 
-    const late =
-        lateAfterTime.split(":").map(Number);
+            document.getElementById(
 
-    const officeStartMinutes =
-        start[0] * 60 + start[1];
+                "officeStart"
 
-    const lateMinutes =
-        late[0] * 60 + late[1];
+            ).value;
 
-    const lateAfter =
-        lateMinutes - officeStartMinutes;
 
-    try {
+        const lateAfter =
 
-        const response = await fetch("/api/settings", {
+            document.getElementById(
 
-            method: "PUT",
+                "lateAfter"
 
-            credentials: "same-origin",
+            ).value;
 
-            headers: {
-                "Content-Type": "application/json"
-            },
 
-            body: JSON.stringify({
+        const officeEnd =
 
-                officeStart,
-                officeEnd,
-                lateAfter
+            document.getElementById(
 
-            })
+                "officeEnd"
 
-        });
+            ).value;
 
-        const result = await response.json();
 
-        if (response.status === 401) {
+        try {
 
-            window.location.href = "/login";
-            return;
+
+            const response =
+
+                await fetch(
+
+                    "/api/settings",
+
+                    {
+
+                        method: "PUT",
+
+                        credentials:
+                            "same-origin",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json"
+
+                        },
+
+                        body:
+
+                            JSON.stringify({
+
+                                officeStart,
+
+                                lateAfter,
+
+                                officeEnd
+
+                            })
+
+                    }
+
+                );
+
+
+            const result =
+
+                await response.json();
+
+
+            if (
+
+                response.status === 401
+
+            ) {
+
+                window.location.href =
+                    "/login";
+
+                return;
+
+            }
+
+
+            if (
+
+                result.success
+
+            ) {
+
+                alert(
+
+                    "Attendance settings saved successfully."
+
+                );
+
+            }
+
+            else {
+
+                alert(
+
+                    result.message
+
+                );
+
+            }
 
         }
 
-        if (result.success) {
+        catch (error) {
 
-            alert("Attendance settings saved successfully.");
+            console.error(error);
 
-            loadAttendanceSettings();
 
-        } else {
+            alert(
 
-            alert(result.message);
+                "Unable to connect to server."
+
+            );
 
         }
-
-    } catch (err) {
-
-        console.error(err);
-
-        alert("Unable to connect to server.");
 
     }
 
-});
+);
