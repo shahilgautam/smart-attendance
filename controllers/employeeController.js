@@ -49,13 +49,14 @@ exports.addEmployee = async (req, res) => {
     department,
     designation,
     email,
-    phone
+    phone,
+    address
 } = req.body;
         await pool.query(
 
             `INSERT INTO employees
-(employee_code, name, department, designation, email, phone)
-VALUES (?, ?, ?, ?, ?, ?)`,
+(employee_code, name, department, designation, email, phone, address)
+VALUES (?, ?, ?, ?, ?, ?, ?)`,
 
            [
     employee_code,
@@ -63,7 +64,8 @@ VALUES (?, ?, ?, ?, ?, ?)`,
     department,
     designation,
     email,
-    phone
+    phone,
+    address
 ]
 
         );
@@ -130,29 +132,17 @@ exports.deleteEmployee = async (req, res) => {
         const photo = employeeRows[0].photo;
 
 
-        /// =====================================
-        // DELETE EMPLOYEE ATTENDANCE
+        // =====================================
+        // DELETE EMPLOYEE FROM DATABASE
         // =====================================
 
-            await pool.query(
-
-            "DELETE FROM attendance WHERE employee_id = ?",
-
-            [id]
-
-            );
-
-        // =====================================
-        // DELETE EMPLOYEE
-        // =====================================
-
-            await pool.query(
+        await pool.query(
 
             "DELETE FROM employees WHERE id = ?",
 
             [id]
 
-            );
+        );
 
 
         // =====================================
