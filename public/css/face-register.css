@@ -6,7 +6,8 @@
 }
 
 body{
-    background:#f4f7fb;
+        background:rgba(110, 145, 186, 0.58);
+
 }
 .header-buttons{
     display:flex;
