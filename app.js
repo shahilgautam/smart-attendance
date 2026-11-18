@@ -210,6 +210,7 @@ app.get(
 // Pages
 // ============================
 
+
 app.get("/", (req, res) => {
 
     res.sendFile(
@@ -220,34 +221,13 @@ app.get("/", (req, res) => {
 
             "views",
 
-            "index.html"
+            "login.html"
 
         )
 
     );
 
 });
-
-
-app.get("/index", (req, res) => {
-
-    res.sendFile(
-
-        path.join(
-
-            __dirname,
-
-            "views",
-
-            "index.html"
-
-        )
-
-    );
-
-});
-
-
 app.get("/login", (req, res) => {
 
     res.sendFile(
